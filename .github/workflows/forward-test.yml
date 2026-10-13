@@ -11,6 +11,9 @@ on:
   schedule:
     # 01:17 UTC = 04:17 Istanbul; safely after US close in either DST regime.
     - cron: '17 1 * * 2-6'
+    # Independent backup triggers; existing origins are immutable/idempotent.
+    - cron: '47 3 * * 2-6'
+    - cron: '17 6 * * 2-6'
 permissions:
   contents: write
 concurrency:

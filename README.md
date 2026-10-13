@@ -50,7 +50,7 @@ Repeat `daily` after the US close (default: one-hour publication buffer). Runnin
 
 ## Run automatically on GitHub
 
-The **Daily forward test** workflow starts on the initial code push (and later code/config changes), and runs Tuesday–Saturday at **01:17 UTC / 04:17 Istanbul**, after US weekday sessions. It can also be started from **Actions → Daily forward test → Run workflow**. Scheduling begins after this workflow is committed to the default branch; GitHub may delay scheduled runs. No API secrets are required for public checkpoint/Yahoo access. GitHub Actions must be enabled and the repository must allow its GITHUB_TOKEN to write contents. If repository rules block direct pushes, run locally and commit results yourself.
+The **Daily forward test** workflow starts on the initial code push (and later code/config changes), and runs Tuesday–Saturday at **01:17 UTC / 04:17 Istanbul**, with backup attempts at **03:47 UTC / 06:47 Istanbul** and **06:17 UTC / 09:17 Istanbul**, after US weekday sessions. It can also be started from **Actions → Daily forward test → Run workflow**. Scheduling begins after this workflow is committed to the default branch; GitHub may delay scheduled runs. No API secrets are required for public checkpoint/Yahoo access. GitHub Actions must be enabled and the repository must allow its GITHUB_TOKEN to write contents. If repository rules block direct pushes, run locally and commit results yourself.
 
 Every run commits snapshots and reports separately to `results/` and `results-broad/`, and uploads an artifact. Check workflow logs for failures; a missed origin is not recreated later and mislabeled as prospective.
 
@@ -95,3 +95,11 @@ python -m unittest discover -s tests -v
 ```
 
 Offline tests also exercise strong/weak/mixed results, incomplete panels, policy immutability, and paired block resampling. Offline tests cover exchange sessions/holidays/early closes, unfinished bars, missing data, immutable forecasts and outcomes, experiment configuration, split handling, metric calculations, and late-issued forecasts. CI runs these without model downloads. Real network/inference checks require the model extra and external services.
+
+## Unattended reliability
+
+The three schedule triggers give transient provider/GitHub failures another chance before the next US session opens. Duplicate attempts preserve existing forecasts. Yahoo requests also have bounded retries; successful results are committed and copied to workflow artifacts. This reduces risk but does not guarantee execution: GitHub can delay/drop scheduled jobs and Yahoo can remain unavailable. A missed forecast cannot be reconstructed afterward and claimed as prospective.
+
+A separate ChatGPT health task checks the connected repository Tuesday–Saturday at 10:30 Istanbul through December 15, 2026, and notifies the owner only when an unresolved workflow/data problem needs attention. It checks that active studies create current forecasts and that realized outcomes continue to be recorded after collection stops. ChatGPT phone notifications must be enabled to receive those alerts on a phone. The monitor is a second system, not a guarantee of delivery or automatic repair.
+
+For another alert route, watch the repository and enable GitHub Actions email notifications for failed workflows in https://github.com/settings/notifications. Expected full review dates are December 11 for the original pilot and December 12 for the broader study if it starts October 14; use December 15 as a review reminder buffer. Actual manifests/target dates are authoritative if collection starts late.

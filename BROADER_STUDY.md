@@ -36,7 +36,7 @@ Company/ticker reference examples: [Harley-Davidson](https://investor.harley-dav
 
 ## Automated and manual execution
 
-The daily GitHub workflow runs both studies, preserving each study's output even if the other fails. The broader study's initial preflight downloads no model and only verifies historical data coverage. A successful preflight is saved at results-broad/preflight.json; it does not start the collection clock or issue a prediction.
+The GitHub workflow has three daily opportunities (04:17, 06:47, and 09:17 Istanbul, Tuesday–Saturday) and runs both studies, preserving each study's output even if the other fails. The broader study's initial preflight downloads no model and only verifies historical data coverage. A successful preflight is saved at results-broad/preflight.json; it does not start the collection clock or issue a prediction.
 
 ```bash
 python -m timesfm_stock.cli preflight --config config-broad.json --output results-broad
