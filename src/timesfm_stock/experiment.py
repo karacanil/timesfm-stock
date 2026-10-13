@@ -46,6 +46,9 @@ def validate_config(config):
             raise ValueError(f"Invalid {key}: expected integer in [{lower}, {upper}]")
     if not config["modes"] or len(set(config["modes"])) != len(config["modes"]) or not set(config["modes"]) <= {"univariate", "multivariate"}:
         raise ValueError("modes must contain univariate and/or multivariate")
+    if "sectors" in config:
+        if set(config["sectors"]) != set(symbols) or any(not isinstance(v, str) or not v for v in config["sectors"].values()):
+            raise ValueError("sectors must label every configured symbol exactly once")
     if config["checkpoint"] != "google/timesfm-3.0-pytorch":
         raise ValueError("This experiment expects the official TimesFM 3.0 checkpoint")
     if not isinstance(config["checkpoint_revision"], str) or not config["checkpoint_revision"]:
@@ -72,6 +75,10 @@ def collect(config, root, now=None, fetch=yahoo_history, model_factory=TimesFM, 
     if run_path.exists():
         print(f"Forecast for {origin} already frozen; skipping.")
         return run_path
+    dates = future_sessions(calendar, origin, config["horizon_sessions"])
+    if now >= calendar.session_open(dates[0]):
+        print("Waiting for the current session to close and the publication buffer to pass; no retrospective forecast will be issued.")
+        return None
     required = sessions[-config["context_sessions"]:]
     end = (sessions[-1] + pd.Timedelta(days=1)).date().isoformat()
     snapshots, contexts = {}, []
@@ -85,7 +92,6 @@ def collect(config, root, now=None, fetch=yahoo_history, model_factory=TimesFM, 
     model = model_factory(config, revision)
     predictions = model.predict(np.stack(contexts), config["horizon_sessions"], config["modes"])
     issued = utc_now() if live_clock else now
-    dates = future_sessions(calendar, origin, config["horizon_sessions"])
     if issued >= calendar.session_open(dates[0]):
         raise ValueError("Next target session has opened; wait for its completed close to forecast")
     packages = {}
@@ -160,3 +166,25 @@ def evaluate(root, now=None, fetch=yahoo_history):
                     outcome = {"status": "observed", "actual": float(frame.at[day, "Close"])}
                 write_new(destination, {"date": target, "observed_at": now.isoformat(), **outcome})
     print("Updated first-observed outcomes; existing observations were preserved.")
+
+
+def preflight(config, root, now=None, fetch=yahoo_history):
+    """Validate provider coverage without model downloads or issuing a forecast."""
+    validate_config(config)
+    now = pd.Timestamp(now) if now is not None else utc_now()
+    _, sessions = completed_sessions(config['calendar'], now, config['close_delay_minutes'])
+    required = sessions[-config['context_sessions']:]
+    end = (sessions[-1] + pd.Timedelta(days=1)).date().isoformat()
+    checks = []
+    for symbol in config['symbols']:
+        frame = fetch(symbol, required[0].date().isoformat(), end)
+        values = aligned_context(frame, sessions, config['context_sessions'])
+        checks.append({'symbol': symbol, 'completed_context_sessions': len(values)})
+    payload = {'validated_at': now.isoformat(), 'latest_completed_session': sessions[-1].date().isoformat(),
+               'symbols': checks, 'status': 'passed', 'note': 'Data coverage check only; no forecast issued.'}
+    destination = Path(root) / 'preflight.json'
+    # Freeze the first successful coverage check; collection dates come from a real forecast later.
+    if not destination.exists():
+        write_new(destination, payload)
+    print(f"Preflight passed for all {len(checks)} symbols through {payload['latest_completed_session']}.")
+    return payload

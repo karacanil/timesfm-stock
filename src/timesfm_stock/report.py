@@ -100,6 +100,17 @@ def report(root, policy=None):
                 if group:
                     summary.append({"mode": mode, "symbol": symbol, "horizon": horizon, **metrics(group)})
     write_csv(destination / "summary.csv", summary)
+    sector_rows = []
+    if (root / 'experiment.json').exists():
+        sectors = read(root / 'experiment.json')['config'].get('sectors', {})
+        for mode in sorted({r['mode'] for r in rows}):
+            for sector in sorted(set(sectors.values())):
+                for horizon in ['1', '5', '20']:
+                    group = [r for r in rows if r['mode'] == mode and r['horizon'] == int(horizon)
+                             and sectors.get(r['symbol']) == sector]
+                    if group:
+                        sector_rows.append({'mode': mode, 'sector': sector, 'horizon': horizon, **metrics(group)})
+    write_csv(destination / 'sector_summary.csv', sector_rows)
     text = ["# TimesFM 3.0 forward test", "",
             f"Frozen forecast origins: **{len(runs)}**. Pending ticker/date outcomes: **{counts['pending']}**. "
             f"Split exclusions: **{counts['excluded_split']}**.", "",
@@ -112,6 +123,14 @@ def report(root, policy=None):
             skill = "n/a" if row["skill_pct"] is None else f"{row['skill_pct']:.2f}"
             text.append(f"| {row['mode']} | {row['horizon']} | {row['n']} | {row['mae_pct']:.3f} | "
                         f"{row['baseline_mae_pct']:.3f} | {skill} | {row['direction_accuracy_pct']:.1f} | {row['coverage_80_pct']:.1f} |")
+    if sector_rows:
+        text.extend(['', '## Sector diagnostics (5-session horizon)', '',
+                     '| Mode | Sector | N | Skill vs last price % |', '|---|---|---:|---:|'])
+        for row in sector_rows:
+            if row['horizon'] == '5':
+                value = 'n/a' if row['skill_pct'] is None else f"{row['skill_pct']:.2f}"
+                text.append(f"| {row['mode']} | {row['sector']} | {row['n']} | {value} |")
+        text.extend(['', 'Sector results are exploratory diagnostics; they do not replace the fixed pooled primary endpoint.'])
     if not rows:
         text.extend(["", "No realized scores yet. Forecasts remain pending until their target sessions close."])
     text.extend(["", "N counts ticker/origin/target outcomes, not independent observations. Daily forecasts overlap; "
@@ -124,5 +143,7 @@ def report(root, policy=None):
         decision = assess(rows, runs, read(root / 'experiment.json'), policy, pending_primary)
         (destination / 'decision.json').write_text(json.dumps(decision, indent=2, allow_nan=False) + '\n')
         text.extend(['', *decision_markdown(decision)])
+    else:
+        text.extend(['', 'No forecast has been issued for this study yet. Collection starts with the first successful prospective run.'])
     (destination / "report.md").write_text("\n".join(text) + "\n")
     print(f"Report: {destination / 'report.md'}")

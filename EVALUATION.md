@@ -19,7 +19,7 @@ Drift is reconstructed deterministically from already frozen histories; it does 
 
 - The 30-day collection window has ended.
 - All issued 5-session targets are observed or explicitly excluded.
-- At least **20 forecast origins** have valid outcomes for **all eight symbols**.
+- At least **20 forecast origins** have valid outcomes for **all configured symbols**.
 - At least **90% of saved origins** form complete panels. Missing scheduled runs are also visible in Actions/history; this fraction alone does not measure scheduler uptime.
 
 Until these conditions hold, the decision is INCONCLUSIVE and scores are interim. A panel excludes an entire origin if any symbol's primary target is missing/excluded. This keeps the comparison universe constant; ordinary score tables can contain more partially observed rows.
@@ -30,7 +30,7 @@ A mode must pass every condition against **both** baselines:
 
 - At least **5% lower normalized mean absolute error**.
 - Lower uncertainty bound for skill is above zero with **both 5-origin and 10-origin block resampling**.
-- Positive skill for at least **5 of 8 symbols**.
+- Positive skill for at least **62.5% of configured symbols**, rounded up: **5 of 8** in the original pilot, **14 of 22** in the broader study.
 - Positive skill in **both chronological halves** of complete origins.
 - Positive pooled skill after removing **any one symbol**.
 
@@ -72,4 +72,4 @@ If NO_GO, investigate another method. If INCONCLUSIVE, extend evidence collectio
 - `results/reports/decision.json`: machine-readable verdict, policy hash, checks, skills, uncertainty intervals, per-stock/half-period/leave-one-out results.
 - `results/reports/report.md`: readable verdict and reasons alongside ordinary scores.
 
-Collection settings remain in config.json. Do not change this policy after seeing outcomes; a different policy requires a separate, explicitly labeled experiment.
+Collection settings remain in config.json for the original pilot and config-broad.json for the separate broader study. The same policy is frozen independently in each output directory. Do not change this policy after seeing outcomes; a different policy requires a separate, explicitly labeled experiment.

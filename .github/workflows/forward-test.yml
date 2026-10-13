@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - 'config.json'
+      - 'config-broad.json'
       - 'src/**'
       - 'pyproject.toml'
       - '.github/workflows/forward-test.yml'
@@ -35,21 +36,37 @@ jobs:
           key: timesfm3-official-checkpoint-v1
       - run: pip install torch --index-url https://download.pytorch.org/whl/cpu
       - run: pip install -e '.[model]'
-      - name: Evaluate outcomes and save new forecasts
+      - name: Original pilot — evaluate and forecast
         run: python -m timesfm_stock.cli daily
+      - name: Broader study — validate initial data
+        if: always()
+        run: |
+          if [ ! -f results-broad/experiment.json ]; then
+            python -m timesfm_stock.cli preflight --config config-broad.json --output results-broad
+          fi
+      - name: Broader study — evaluate and forecast
+        if: always()
+        run: python -m timesfm_stock.cli daily --config config-broad.json --output results-broad
       - name: Show report
         if: always()
         run: |
-          if [ -f results/reports/report.md ]; then
-            cat results/reports/report.md >> "$GITHUB_STEP_SUMMARY"
-          fi
+          for study_dir in results results-broad; do
+            if [ -f "$study_dir/reports/report.md" ]; then
+              printf '\n## %s\n\n' "$study_dir" >> "$GITHUB_STEP_SUMMARY"
+              cat "$study_dir/reports/report.md" >> "$GITHUB_STEP_SUMMARY"
+            fi
+          done
       - name: Persist results
         if: always()
         run: |
-          if [ -d results ]; then
+          if [ -d results ] || [ -d results-broad ]; then
             git config user.name 'github-actions[bot]'
             git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-            git add results
+            for study_dir in results results-broad; do
+              if [ -d "$study_dir" ]; then
+                git add "$study_dir"
+              fi
+            done
             if ! git diff --cached --quiet; then
               git commit -m 'Record forward forecasts and realized outcomes [skip ci]'
               git push
@@ -59,6 +76,8 @@ jobs:
         if: always()
         with:
           name: forward-test-results
-          path: results/
+          path: |
+            results/
+            results-broad/
           if-no-files-found: ignore
           retention-days: 90

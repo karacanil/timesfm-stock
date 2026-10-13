@@ -13,6 +13,14 @@ A prospective research experiment using **current Yahoo Finance daily closes** a
 
 Twenty sessions is roughly a month; five is roughly a week. These are exchange sessions, not calendar days. Default XNYS sessions also suit this US watchlist's Nasdaq listings. Other exchanges require a matching calendar and homogeneous watchlist. Daily bars are not real-time intraday quotes.
 
+## Parallel broader study
+
+A separate [22-stock study](BROADER_STUDY.md) adds two companies from each of 11 sectors. It uses config-broad.json and results-broad/, with the same weights and evaluation rules. The original pilot remains in results/. Both run automatically; see [the broader report](results-broad/reports/report.md). SPY is not counted as a stock in the broader study.
+
+```bash
+python -m timesfm_stock.cli daily --config config-broad.json --output results-broad
+```
+
 ## Start locally
 
 Python 3.11+ (3.12 recommended):
@@ -38,13 +46,13 @@ python -m timesfm_stock.cli report    # Rebuild scores and decision offline
 python -m timesfm_stock.cli daily     # Evaluate, forecast, report
 ```
 
-Repeat `daily` after the US close (default: one-hour publication buffer). Running before the next market open is required. A rerun for the same origin never changes the saved forecast. Market holidays/weekends create no additional origin. Missing latest data fails the run instead of quietly forecasting from stale data.
+Repeat `daily` after the US close (default: one-hour publication buffer). Running before the next market open is required. A rerun for the same origin never changes the saved forecast. An attempt during an already-open target session waits for its completed close. Market holidays/weekends create no additional origin. Missing latest data fails the run instead of quietly forecasting from stale data.
 
 ## Run automatically on GitHub
 
 The **Daily forward test** workflow starts on the initial code push (and later code/config changes), and runs Tuesday–Saturday at **01:17 UTC / 04:17 Istanbul**, after US weekday sessions. It can also be started from **Actions → Daily forward test → Run workflow**. Scheduling begins after this workflow is committed to the default branch; GitHub may delay scheduled runs. No API secrets are required for public checkpoint/Yahoo access. GitHub Actions must be enabled and the repository must allow its GITHUB_TOKEN to write contents. If repository rules block direct pushes, run locally and commit results yourself.
 
-Every run commits snapshots and reports to `results/`, and uploads an artifact. Check workflow logs for failures; a missed origin is not recreated later and mislabeled as prospective.
+Every run commits snapshots and reports separately to `results/` and `results-broad/`, and uploads an artifact. Check workflow logs for failures; a missed origin is not recreated later and mislabeled as prospective.
 
 New forecast collection stops **30 calendar days after the first successful forecast** (`collection_days` in config.json). Evaluation continues afterward so the last 20-session forecasts can mature—roughly another month. Disable the workflow once all outcomes have matured. For a short pilot, set collection_days to 7 **before the first forecast**. To change tickers/settings later, start a new output directory, e.g. `--output results-study-2`; the default workflow operates on `results/`.
 
@@ -62,6 +70,7 @@ Policy is frozen in results/decision_policy.json. Changing thresholds later is r
 - `results/reports/report.md`: readable overview and pilot decision.
 - `results/reports/decision.json`: decision checks, uncertainty intervals, and detailed reasons.
 - `results/reports/summary.csv`: per-symbol and pooled metrics.
+- `results-broad/reports/sector_summary.csv`: broader-study sector diagnostics.
 - `results/reports/predictions.csv`: individual scored forecasts and baseline.
 
 All errors are normalized by each origin's last close, so high-price stocks do not dominate the pooled scores. **Positive skill** means lower MAE than predicting the last close; negative skill means TimesFM did worse. Exact zero-move ties are included in direction accuracy. The model's q10–q90 interval has nominal 80% coverage; empirical coverage may be very different. All-horizon totals mix short and long targets, so inspect horizon-specific scores too. N counts overlapping ticker/origin/target outcomes, not independent samples.
