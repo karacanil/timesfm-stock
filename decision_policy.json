@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "primary_horizon": 5,
+  "minimum_complete_origins": 20,
+  "minimum_complete_fraction": 0.9,
+  "minimum_skill_pct": 5.0,
+  "minimum_winning_symbol_fraction": 0.625,
+  "block_lengths": [5, 10],
+  "bootstrap_repetitions": 5000,
+  "family_confidence": 0.95,
+  "seed": 20261013,
+  "baselines": ["last_price", "drift"]
+}

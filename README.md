@@ -34,7 +34,7 @@ Commands:
 ```bash
 python -m timesfm_stock.cli forecast  # Freeze one forecast per completed origin
 python -m timesfm_stock.cli evaluate  # Fetch realized closes; no model needed
-python -m timesfm_stock.cli report    # Rebuild reports offline
+python -m timesfm_stock.cli report    # Rebuild scores and decision offline
 python -m timesfm_stock.cli daily     # Evaluate, forecast, report
 ```
 
@@ -48,12 +48,19 @@ Every run commits snapshots and reports to `results/`, and uploads an artifact. 
 
 New forecast collection stops **30 calendar days after the first successful forecast** (`collection_days` in config.json). Evaluation continues afterward so the last 20-session forecasts can mature—roughly another month. Disable the workflow once all outcomes have matured. For a short pilot, set collection_days to 7 **before the first forecast**. To change tickers/settings later, start a new output directory, e.g. `--output results-study-2`; the default workflow operates on `results/`.
 
+## Decide whether to continue
+
+The fixed [evaluation policy](EVALUATION.md) tests the **5-session horizon** against both last-price and drift baselines. A promising mode needs at least 5% lower MAE, broad gains, robustness across time/stocks, and positive lower bounds under paired block uncertainty checks. Verdicts are **PROMISING**, **NO_GO**, or **INCONCLUSIVE**; readiness requires completed collection and at least 20 complete origins. These pilot verdicts guide whether to pursue untouched confirmation, not whether to trade.
+
+Policy is frozen in results/decision_policy.json. Changing thresholds later is rejected. Supporting scores now include baseline RMSE, drift MAE, and always-up/down/historical-majority directional benchmarks. See results/reports/decision.json and the main report for explanations.
+
 ## Inspect results
 
 - `results/experiment.json`: fixed configuration, exact weight revision, collection window.
 - `results/runs/YYYY-MM-DD.json`: issue time, prices actually used, history hash, model/code versions, target dates, both modes' forecasts and quantiles.
 - `results/observations/<origin>/<symbol>/<date>.json`: first-observed realized close or split exclusion. Never overwritten.
-- `results/reports/report.md`: readable overview.
+- `results/reports/report.md`: readable overview and pilot decision.
+- `results/reports/decision.json`: decision checks, uncertainty intervals, and detailed reasons.
 - `results/reports/summary.csv`: per-symbol and pooled metrics.
 - `results/reports/predictions.csv`: individual scored forecasts and baseline.
 
@@ -78,4 +85,4 @@ pip install -e .
 python -m unittest discover -s tests -v
 ```
 
-Offline tests cover exchange sessions/holidays/early closes, unfinished bars, missing data, immutable forecasts and outcomes, experiment configuration, split handling, metric calculations, and late-issued forecasts. CI runs these without model downloads. Real network/inference checks require the model extra and external services.
+Offline tests also exercise strong/weak/mixed results, incomplete panels, policy immutability, and paired block resampling. Offline tests cover exchange sessions/holidays/early closes, unfinished bars, missing data, immutable forecasts and outcomes, experiment configuration, split handling, metric calculations, and late-issued forecasts. CI runs these without model downloads. Real network/inference checks require the model extra and external services.
