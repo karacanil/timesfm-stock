@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "config": {
+    "symbols": [
+      "AAPL",
+      "MSFT",
+      "GOOGL",
+      "AMZN",
+      "NVDA",
+      "JPM",
+      "XOM",
+      "SPY"
+    ],
+    "calendar": "XNYS",
+    "context_sessions": 512,
+    "horizon_sessions": 20,
+    "modes": [
+      "univariate",
+      "multivariate"
+    ],
+    "checkpoint": "google/timesfm-3.0-pytorch",
+    "checkpoint_revision": "main",
+    "device": "cpu",
+    "batch_size": 1,
+    "close_delay_minutes": 60,
+    "collection_days": 30
+  },
+  "weight_revision": "43046b85ec22d584a13f8098c2ed39c889e129c2",
+  "started_at": "2026-10-13T06:23:19.995084+00:00",
+  "collect_until": "2026-11-12T06:23:19.995084+00:00"
+}
