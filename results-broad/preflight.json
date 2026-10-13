@@ -1,0 +1,96 @@
+{
+  "validated_at": "2026-10-13T17:08:01.977046+00:00",
+  "latest_completed_session": "2026-10-12",
+  "symbols": [
+    {
+      "symbol": "AAPL",
+      "completed_context_sessions": 512
+    },
+    {
+      "symbol": "TXN",
+      "completed_context_sessions": 512
+    },
+    {
+      "symbol": "GOOGL",
+      "completed_context_sessions": 512
+    },
+    {
+      "symbol": "FOXA",
+      "completed_context_sessions": 512
+    },
+    {
+      "symbol": "AMZN",
+      "completed_context_sessions": 512
+    },
+    {
+      "symbol": "HOG",
+      "completed_context_sessions": 512
+    },
+    {
+      "symbol": "PG",
+      "completed_context_sessions": 512
+    },
+    {
+      "symbol": "SJM",
+      "completed_context_sessions": 512
+    },
+    {
+      "symbol": "JNJ",
+      "completed_context_sessions": 512
+    },
+    {
+      "symbol": "BAX",
+      "completed_context_sessions": 512
+    },
+    {
+      "symbol": "JPM",
+      "completed_context_sessions": 512
+    },
+    {
+      "symbol": "AIZ",
+      "completed_context_sessions": 512
+    },
+    {
+      "symbol": "CAT",
+      "completed_context_sessions": 512
+    },
+    {
+      "symbol": "GATX",
+      "completed_context_sessions": 512
+    },
+    {
+      "symbol": "XOM",
+      "completed_context_sessions": 512
+    },
+    {
+      "symbol": "OVV",
+      "completed_context_sessions": 512
+    },
+    {
+      "symbol": "NEE",
+      "completed_context_sessions": 512
+    },
+    {
+      "symbol": "OGE",
+      "completed_context_sessions": 512
+    },
+    {
+      "symbol": "LIN",
+      "completed_context_sessions": 512
+    },
+    {
+      "symbol": "SON",
+      "completed_context_sessions": 512
+    },
+    {
+      "symbol": "PLD",
+      "completed_context_sessions": 512
+    },
+    {
+      "symbol": "KRC",
+      "completed_context_sessions": 512
+    }
+  ],
+  "status": "passed",
+  "note": "Data coverage check only; no forecast issued."
+}
