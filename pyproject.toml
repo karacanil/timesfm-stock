@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "timesfm-stock"
+version = "0.1.0"
+description = "Prospective, reproducible stock forecasting experiments with TimesFM 3.0"
+requires-python = ">=3.11"
+dependencies = [
+  "numpy>=1.26.4,<3", "pandas>=2.2,<3",
+  "yfinance==0.2.66", "exchange-calendars==4.11.2",
+]
+
+[project.optional-dependencies]
+model = ["timesfm[torch] @ git+https://github.com/google-research/timesfm.git@e51928e27119cb17bebc005be2696b75e0a9e688"]
+
+[project.scripts]
+timesfm-stock = "timesfm_stock.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

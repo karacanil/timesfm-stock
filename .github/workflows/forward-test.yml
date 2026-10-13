@@ -1,0 +1,64 @@
+name: Daily forward test
+on:
+  push:
+    paths:
+      - 'config.json'
+      - 'src/**'
+      - 'pyproject.toml'
+      - '.github/workflows/forward-test.yml'
+  workflow_dispatch:
+  schedule:
+    # 01:17 UTC = 04:17 Istanbul; safely after US close in either DST regime.
+    - cron: '17 1 * * 2-6'
+permissions:
+  contents: write
+concurrency:
+  group: forward-test
+  cancel-in-progress: false
+jobs:
+  collect-and-score:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      OMP_NUM_THREADS: '2'
+      MKL_NUM_THREADS: '2'
+      HF_HOME: ${{ github.workspace }}/.cache/huggingface
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - uses: actions/cache@v4
+        with:
+          path: .cache/huggingface
+          key: timesfm3-official-checkpoint-v1
+      - run: pip install torch --index-url https://download.pytorch.org/whl/cpu
+      - run: pip install -e '.[model]'
+      - name: Evaluate outcomes and save new forecasts
+        run: python -m timesfm_stock.cli daily
+      - name: Show report
+        if: always()
+        run: |
+          if [ -f results/reports/report.md ]; then
+            cat results/reports/report.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - name: Persist results
+        if: always()
+        run: |
+          if [ -d results ]; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add results
+            if ! git diff --cached --quiet; then
+              git commit -m 'Record forward forecasts and realized outcomes [skip ci]'
+              git push
+            fi
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: forward-test-results
+          path: results/
+          if-no-files-found: ignore
+          retention-days: 90

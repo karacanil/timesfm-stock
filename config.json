@@ -1,0 +1,13 @@
+{
+  "symbols": ["AAPL", "MSFT", "GOOGL", "AMZN", "NVDA", "JPM", "XOM", "SPY"],
+  "calendar": "XNYS",
+  "context_sessions": 512,
+  "horizon_sessions": 20,
+  "modes": ["univariate", "multivariate"],
+  "checkpoint": "google/timesfm-3.0-pytorch",
+  "checkpoint_revision": "main",
+  "device": "cpu",
+  "batch_size": 1,
+  "close_delay_minutes": 60,
+  "collection_days": 30
+}
