@@ -1,6 +1,6 @@
 # TimesFM 3.0 forward test
 
-Frozen forecast origins: **0**. Pending ticker/date outcomes: **0**. Split exclusions: **0**.
+Frozen forecast origins: **1**. Pending ticker/date outcomes: **440**. Split exclusions: **0**.
 
 Errors are normalized by the price at the forecast origin. Baseline predicts that price at every horizon. Positive skill means lower MAE than the baseline. Coverage measures the q10–q90 interval (nominal 80%).
 
@@ -13,4 +13,20 @@ N counts ticker/origin/target outcomes, not independent observations. Daily fore
 
 See summary.csv for per-symbol scores and predictions.csv for individual outcomes.
 
-No forecast has been issued for this study yet. Collection starts with the first successful prospective run.
+## Pilot decision
+
+**INCONCLUSIVE** — primary horizon: 5 trading sessions.
+
+PROMISING supports a new untouched confirmation experiment before strategy research. NO_GO supports deprioritizing this setup. INCONCLUSIVE requires more evidence; it is not a pass.
+
+| Mode | Verdict | Complete origins | Last-price skill % | Drift skill % |
+|---|---|---:|---:|---:|
+| univariate | INCONCLUSIVE | 0 | n/a | n/a |
+| multivariate | INCONCLUSIVE | 0 | n/a | n/a |
+
+Approximate paired block intervals use 98.75% confidence per comparison (adjusted for the tested modes/baselines). Stocks are resampled together; block sizes 5 and 10 check sensitivity. With a short pilot these intervals remain fragile, and cross-regime reliability is untested.
+
+**univariate:** No complete primary-horizon origins yet.
+**multivariate:** No complete primary-horizon origins yet.
+
+See decision.json for uncertainty intervals, individual-stock results, half-period checks, and leave-one-stock-out checks.
