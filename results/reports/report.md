@@ -1,15 +1,15 @@
 # TimesFM 3.0 forward test
 
-Frozen forecast origins: **3**. Pending ticker/date outcomes: **456**. Split exclusions: **0**.
+Frozen forecast origins: **4**. Pending ticker/date outcomes: **592**. Split exclusions: **0**.
 
 Errors are normalized by the price at the forecast origin. Baseline predicts that price at every horizon. Positive skill means lower MAE than the baseline. Coverage measures the q10–q90 interval (nominal 80%).
 
 | Mode | Horizon (sessions) | N | MAE % | Baseline MAE % | Skill % | Direction % | Coverage % |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| multivariate | all | 24 | 1.219 | 1.205 | -1.15 | 54.2 | 83.3 |
-| multivariate | 1 | 16 | 1.081 | 1.062 | -1.74 | 56.2 | 75.0 |
-| univariate | all | 24 | 1.269 | 1.205 | -5.27 | 41.7 | 79.2 |
-| univariate | 1 | 16 | 1.106 | 1.062 | -4.17 | 43.8 | 75.0 |
+| multivariate | all | 48 | 1.206 | 1.160 | -3.99 | 50.0 | 87.5 |
+| multivariate | 1 | 24 | 0.971 | 0.941 | -3.12 | 58.3 | 83.3 |
+| univariate | all | 48 | 1.243 | 1.160 | -7.19 | 41.7 | 85.4 |
+| univariate | 1 | 24 | 0.968 | 0.941 | -2.84 | 50.0 | 83.3 |
 
 N counts ticker/origin/target outcomes, not independent observations. Daily forecasts overlap; one month provides descriptive evidence, not proof of a persistent trading advantage. Direction compares movement from the origin, including exact zero-move ties. Prices are Yahoo Close, not dividend-adjusted total returns. First-observed actuals are frozen; provider corrections may differ later.
 

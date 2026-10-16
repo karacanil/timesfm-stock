@@ -3,7 +3,7 @@
   "policy_sha256": "c880cd165dd88d82caef93686f1ec93b315864efab1e1015edb54a7c382bc83a",
   "primary_horizon": 5,
   "collection_finished": false,
-  "pending_primary_outcomes": 44,
+  "pending_primary_outcomes": 66,
   "interval_confidence_pct": 98.75,
   "verdict": "INCONCLUSIVE",
   "modes": {
