@@ -9,20 +9,156 @@
   "modes": {
     "univariate": {
       "verdict": "INCONCLUSIVE",
-      "complete_origins": 0,
-      "complete_fraction": 0.0,
-      "comparisons": {},
+      "complete_origins": 1,
+      "complete_fraction": 0.16666666666666666,
+      "comparisons": {
+        "last_price": {
+          "skill_pct": -27.87318910340064,
+          "intervals_pct": {
+            "5": null,
+            "10": null
+          },
+          "symbol_skill_pct": {
+            "AAPL": -25.473641813703463,
+            "MSFT": 2.2838172946164303,
+            "GOOGL": -33.08974088672416,
+            "AMZN": -20.683925044156215,
+            "NVDA": -33.565824320794576,
+            "JPM": -325.8451904403313,
+            "XOM": -20.015632156441043,
+            "SPY": -11.46536962527971
+          },
+          "winning_symbols": 1,
+          "leave_one_symbol_out_skill_pct": {
+            "AAPL": -27.970008675691325,
+            "MSFT": -31.025886843759665,
+            "GOOGL": -26.860801692502577,
+            "AMZN": -28.46053220386957,
+            "NVDA": -25.727226981980976,
+            "JPM": -23.193733146392503,
+            "XOM": -30.341387503298378,
+            "SPY": -29.70130167807843
+          },
+          "half_period_skill_pct": [
+            null,
+            null
+          ]
+        },
+        "drift": {
+          "skill_pct": -20.81389437350063,
+          "intervals_pct": {
+            "5": null,
+            "10": null
+          },
+          "symbol_skill_pct": {
+            "AAPL": -187.44810336847135,
+            "MSFT": 14.348597087428061,
+            "GOOGL": -9.297660420202902,
+            "AMZN": -56.549895518373795,
+            "NVDA": -20.500329360258828,
+            "JPM": -64.90581478036357,
+            "XOM": -32.575089301217574,
+            "SPY": 4.998081507977248
+          },
+          "winning_symbols": 2,
+          "leave_one_symbol_out_skill_pct": {
+            "AAPL": -18.105249502424424,
+            "MSFT": -24.808679645237696,
+            "GOOGL": -23.46248581465533,
+            "AMZN": -18.733651038057598,
+            "NVDA": -20.93992722921907,
+            "JPM": -19.085413214498836,
+            "XOM": -17.79149765073642,
+            "SPY": -24.040913378513906
+          },
+          "half_period_skill_pct": [
+            null,
+            null
+          ]
+        }
+      },
       "reasons": [
-        "No complete primary-horizon origins yet."
+        "Collection window still open; results are interim.",
+        "Primary-horizon outcomes remain pending.",
+        "Need 20 complete origins; have 1.",
+        "Too many missing or excluded primary observations."
       ]
     },
     "multivariate": {
       "verdict": "INCONCLUSIVE",
-      "complete_origins": 0,
-      "complete_fraction": 0.0,
-      "comparisons": {},
+      "complete_origins": 1,
+      "complete_fraction": 0.16666666666666666,
+      "comparisons": {
+        "last_price": {
+          "skill_pct": -20.552401142387566,
+          "intervals_pct": {
+            "5": null,
+            "10": null
+          },
+          "symbol_skill_pct": {
+            "AAPL": -74.61001037906836,
+            "MSFT": 50.63034957203423,
+            "GOOGL": -29.18678239987993,
+            "AMZN": 8.02859442116155,
+            "NVDA": -38.81662693545025,
+            "JPM": -363.2991161666205,
+            "XOM": -3.8687097994703157,
+            "SPY": -11.419146768076827
+          },
+          "winning_symbols": 2,
+          "leave_one_symbol_out_skill_pct": {
+            "AAPL": -18.371225289831195,
+            "MSFT": -27.994044864181333,
+            "GOOGL": -18.87670822318297,
+            "AMZN": -22.887389871477115,
+            "NVDA": -13.667305710800903,
+            "JPM": -15.169787506982457,
+            "XOM": -25.793045347061128,
+            "SPY": -21.570002365491735
+          },
+          "half_period_skill_pct": [
+            null,
+            null
+          ]
+        },
+        "drift": {
+          "skill_pct": -13.897253679277831,
+          "intervals_pct": {
+            "5": null,
+            "10": null
+          },
+          "symbol_skill_pct": {
+            "AAPL": -300.0148205400276,
+            "MSFT": 56.72590042523677,
+            "GOOGL": -6.092422897858296,
+            "AMZN": -19.30432266581579,
+            "NVDA": -25.23749508127484,
+            "JPM": -79.40960695007304,
+            "XOM": -14.738415570042008,
+            "SPY": 5.0374772425199055
+          },
+          "winning_symbols": 2,
+          "leave_one_symbol_out_skill_pct": {
+            "AAPL": -9.24640266449277,
+            "MSFT": -21.92069923556954,
+            "GOOGL": -15.692268272690901,
+            "AMZN": -13.58250052102916,
+            "NVDA": -9.339210058103365,
+            "JPM": -11.329053717345294,
+            "XOM": -13.681091549699588,
+            "SPY": -16.26447797934778
+          },
+          "half_period_skill_pct": [
+            null,
+            null
+          ]
+        }
+      },
       "reasons": [
-        "No complete primary-horizon origins yet."
+        "Collection window still open; results are interim.",
+        "Primary-horizon outcomes remain pending.",
+        "Need 20 complete origins; have 1.",
+        "Too many missing or excluded primary observations."
       ]
     }
   },
