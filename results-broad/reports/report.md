@@ -1,44 +1,44 @@
 # TimesFM 3.0 forward test
 
-Frozen forecast origins: **10**. Pending ticker/date outcomes: **3410**. Split exclusions: **0**.
+Frozen forecast origins: **11**. Pending ticker/date outcomes: **3630**. Split exclusions: **0**.
 
 Errors are normalized by the price at the forecast origin. Baseline predicts that price at every horizon. Positive skill means lower MAE than the baseline. Coverage measures the q10–q90 interval (nominal 80%).
 
 | Mode | Horizon (sessions) | N | MAE % | Baseline MAE % | Skill % | Direction % | Coverage % |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| multivariate | all | 990 | 2.676 | 2.578 | -3.80 | 43.4 | 73.6 |
-| multivariate | 1 | 198 | 1.448 | 1.431 | -1.21 | 46.0 | 73.7 |
-| multivariate | 5 | 110 | 3.090 | 2.924 | -5.71 | 39.1 | 77.3 |
-| univariate | all | 990 | 2.676 | 2.578 | -3.81 | 44.3 | 73.8 |
-| univariate | 1 | 198 | 1.459 | 1.431 | -1.94 | 44.9 | 76.3 |
-| univariate | 5 | 110 | 3.064 | 2.924 | -4.80 | 46.4 | 74.5 |
+| multivariate | all | 1210 | 2.737 | 2.620 | -4.45 | 43.4 | 75.5 |
+| multivariate | 1 | 220 | 1.430 | 1.411 | -1.37 | 46.4 | 75.5 |
+| multivariate | 5 | 132 | 3.105 | 2.940 | -5.63 | 40.2 | 78.0 |
+| univariate | all | 1210 | 2.726 | 2.620 | -4.05 | 45.0 | 75.0 |
+| univariate | 1 | 220 | 1.436 | 1.411 | -1.77 | 45.9 | 77.7 |
+| univariate | 5 | 132 | 3.067 | 2.940 | -4.33 | 46.2 | 75.0 |
 
 ## Sector diagnostics (5-session horizon)
 
 | Mode | Sector | N | Skill vs last price % |
 |---|---|---:|---:|
-| multivariate | Communication Services | 10 | -10.75 |
-| multivariate | Consumer Discretionary | 10 | -0.33 |
-| multivariate | Consumer Staples | 10 | -5.86 |
-| multivariate | Energy | 10 | -8.16 |
-| multivariate | Financials | 10 | -7.74 |
-| multivariate | Health Care | 10 | 21.03 |
-| multivariate | Industrials | 10 | -25.53 |
-| multivariate | Information Technology | 10 | -23.37 |
-| multivariate | Materials | 10 | -1.58 |
-| multivariate | Real Estate | 10 | -2.21 |
-| multivariate | Utilities | 10 | 7.34 |
-| univariate | Communication Services | 10 | -6.02 |
-| univariate | Consumer Discretionary | 10 | 6.50 |
-| univariate | Consumer Staples | 10 | -25.05 |
-| univariate | Energy | 10 | -14.72 |
-| univariate | Financials | 10 | -3.74 |
-| univariate | Health Care | 10 | 24.39 |
-| univariate | Industrials | 10 | -20.13 |
-| univariate | Information Technology | 10 | -9.10 |
-| univariate | Materials | 10 | -0.46 |
-| univariate | Real Estate | 10 | 0.11 |
-| univariate | Utilities | 10 | 5.64 |
+| multivariate | Communication Services | 12 | -10.82 |
+| multivariate | Consumer Discretionary | 12 | -0.45 |
+| multivariate | Consumer Staples | 12 | -4.47 |
+| multivariate | Energy | 12 | -10.72 |
+| multivariate | Financials | 12 | -9.83 |
+| multivariate | Health Care | 12 | 18.27 |
+| multivariate | Industrials | 12 | -22.03 |
+| multivariate | Information Technology | 12 | -17.17 |
+| multivariate | Materials | 12 | -2.50 |
+| multivariate | Real Estate | 12 | -2.64 |
+| multivariate | Utilities | 12 | 6.47 |
+| univariate | Communication Services | 12 | -7.55 |
+| univariate | Consumer Discretionary | 12 | 7.55 |
+| univariate | Consumer Staples | 12 | -22.48 |
+| univariate | Energy | 12 | -17.91 |
+| univariate | Financials | 12 | -7.74 |
+| univariate | Health Care | 12 | 22.39 |
+| univariate | Industrials | 12 | -15.62 |
+| univariate | Information Technology | 12 | -8.00 |
+| univariate | Materials | 12 | -1.43 |
+| univariate | Real Estate | 12 | 0.37 |
+| univariate | Utilities | 12 | 5.77 |
 
 Sector results are exploratory diagnostics; they do not replace the fixed pooled primary endpoint.
 
@@ -54,12 +54,12 @@ PROMISING supports a new untouched confirmation experiment before strategy resea
 
 | Mode | Verdict | Complete origins | Last-price skill % | Drift skill % |
 |---|---|---:|---:|---:|
-| univariate | INCONCLUSIVE | 5 | -4.80 | -5.67 |
-| multivariate | INCONCLUSIVE | 5 | -5.71 | -6.59 |
+| univariate | INCONCLUSIVE | 6 | -4.33 | -4.99 |
+| multivariate | INCONCLUSIVE | 6 | -5.63 | -6.29 |
 
 Approximate paired block intervals use 98.75% confidence per comparison (adjusted for the tested modes/baselines). Stocks are resampled together; block sizes 5 and 10 check sensitivity. With a short pilot these intervals remain fragile, and cross-regime reliability is untested.
 
-**univariate:** Collection window still open; results are interim. Primary-horizon outcomes remain pending. Need 20 complete origins; have 5. Too many missing or excluded primary observations.
-**multivariate:** Collection window still open; results are interim. Primary-horizon outcomes remain pending. Need 20 complete origins; have 5. Too many missing or excluded primary observations.
+**univariate:** Collection window still open; results are interim. Primary-horizon outcomes remain pending. Need 20 complete origins; have 6. Too many missing or excluded primary observations.
+**multivariate:** Collection window still open; results are interim. Primary-horizon outcomes remain pending. Need 20 complete origins; have 6. Too many missing or excluded primary observations.
 
 See decision.json for uncertainty intervals, individual-stock results, half-period checks, and leave-one-stock-out checks.

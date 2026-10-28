@@ -1,17 +1,17 @@
 # TimesFM 3.0 forward test
 
-Frozen forecast origins: **11**. Pending ticker/date outcomes: **1320**. Split exclusions: **0**.
+Frozen forecast origins: **12**. Pending ticker/date outcomes: **1392**. Split exclusions: **0**.
 
 Errors are normalized by the price at the forecast origin. Baseline predicts that price at every horizon. Positive skill means lower MAE than the baseline. Coverage measures the q10–q90 interval (nominal 80%).
 
 | Mode | Horizon (sessions) | N | MAE % | Baseline MAE % | Skill % | Direction % | Coverage % |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| multivariate | all | 440 | 2.333 | 2.040 | -14.39 | 38.9 | 77.0 |
-| multivariate | 1 | 80 | 1.153 | 1.141 | -1.13 | 52.5 | 76.2 |
-| multivariate | 5 | 48 | 2.475 | 1.971 | -25.55 | 33.3 | 83.3 |
-| univariate | all | 440 | 2.365 | 2.040 | -15.92 | 34.8 | 77.7 |
-| univariate | 1 | 80 | 1.175 | 1.141 | -3.00 | 50.0 | 77.5 |
-| univariate | 5 | 48 | 2.494 | 1.971 | -26.54 | 25.0 | 81.2 |
+| multivariate | all | 528 | 2.313 | 2.007 | -15.27 | 40.7 | 78.8 |
+| multivariate | 1 | 88 | 1.140 | 1.133 | -0.65 | 53.4 | 77.3 |
+| multivariate | 5 | 56 | 2.427 | 1.936 | -25.33 | 35.7 | 83.9 |
+| univariate | all | 528 | 2.340 | 2.007 | -16.64 | 36.6 | 79.5 |
+| univariate | 1 | 88 | 1.153 | 1.133 | -1.79 | 50.0 | 78.4 |
+| univariate | 5 | 56 | 2.432 | 1.936 | -25.59 | 28.6 | 82.1 |
 
 N counts ticker/origin/target outcomes, not independent observations. Daily forecasts overlap; one month provides descriptive evidence, not proof of a persistent trading advantage. Direction compares movement from the origin, including exact zero-move ties. Prices are Yahoo Close, not dividend-adjusted total returns. First-observed actuals are frozen; provider corrections may differ later.
 
@@ -25,12 +25,12 @@ PROMISING supports a new untouched confirmation experiment before strategy resea
 
 | Mode | Verdict | Complete origins | Last-price skill % | Drift skill % |
 |---|---|---:|---:|---:|
-| univariate | INCONCLUSIVE | 6 | -26.54 | -20.28 |
-| multivariate | INCONCLUSIVE | 6 | -25.55 | -19.34 |
+| univariate | INCONCLUSIVE | 7 | -25.59 | -20.03 |
+| multivariate | INCONCLUSIVE | 7 | -25.33 | -19.78 |
 
 Approximate paired block intervals use 98.75% confidence per comparison (adjusted for the tested modes/baselines). Stocks are resampled together; block sizes 5 and 10 check sensitivity. With a short pilot these intervals remain fragile, and cross-regime reliability is untested.
 
-**univariate:** Collection window still open; results are interim. Primary-horizon outcomes remain pending. Need 20 complete origins; have 6. Too many missing or excluded primary observations.
-**multivariate:** Collection window still open; results are interim. Primary-horizon outcomes remain pending. Need 20 complete origins; have 6. Too many missing or excluded primary observations.
+**univariate:** Collection window still open; results are interim. Primary-horizon outcomes remain pending. Need 20 complete origins; have 7. Too many missing or excluded primary observations.
+**multivariate:** Collection window still open; results are interim. Primary-horizon outcomes remain pending. Need 20 complete origins; have 7. Too many missing or excluded primary observations.
 
 See decision.json for uncertainty intervals, individual-stock results, half-period checks, and leave-one-stock-out checks.
