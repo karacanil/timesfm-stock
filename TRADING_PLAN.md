@@ -82,6 +82,8 @@ v2 candidates (only after v1 has run in paper): momentum ranking across individu
 
 ### Phase 2: paper-trading automation (about 1 week)
 
+**Status (Nov 9, 2026): Phase 2a built with a simulated broker.** `python -m trader.cli paper` (config in `paper_config.json`, ledger in `paper/v2/`) settles fills, dividends and splits; reconciles the broker against the ledger; records a daily snapshot; and at each month end decides with the same code as the backtest and submits whole-share market-on-open orders. Safeguards: idempotent order IDs, all-or-nothing order checks (size, count, suspicious price moves), stale-data refusal, a `HALT` file or `TRADER_HALT` repository variable, and up to 5 sessions of catch-up if a month-end run is late. The `Paper trading` workflow runs it after each session once merged to main. A dry run replaying the Oct 30 month end on real data matched the backtest's targets exactly. Phase 2b (a real broker's paper account) waits on the broker choice.
+
 - Broker adapter with three modes behind one interface: `backtest`, `paper`, `live`. Start with a local simulated broker, then connect a broker's paper (simulated money) API. Candidates: **Alpaca** (simple REST API, free paper accounts) or **Interactive Brokers** (wide international access, more complex API). Whether each will open an account for your country of residence must be checked before choosing.
 - Orders are idempotent: a deterministic `client_order_id` per rebalance date and symbol, so a re-run can never double-submit.
 - Before every run, compare broker positions with the ledger. Any mismatch halts trading and alerts.
