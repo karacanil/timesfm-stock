@@ -1,6 +1,8 @@
 name: Daily forward test
 on:
   push:
+    # Only main records forecasts; feature-branch pushes must never write results.
+    branches: [main]
     paths:
       - 'config.json'
       - 'config-broad.json'
