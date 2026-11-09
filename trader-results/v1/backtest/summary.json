@@ -1,4 +1,6 @@
 {
+  "policy_version": 1,
+  "rebalance_frequency": "weekly",
   "policy_sha256": "9da6fadd7f334ced0c6e90f9679a02164b66c600276618422199b37fd561662e",
   "data_sha256": "625f5162f4172e825688fc1ad048de72e2302ee1efaf50fae3b21a922f5031b8",
   "forward_filled_sessions": {

@@ -65,7 +65,11 @@ def trend_strategy(opens, closes, cash_daily, policy, cost_multiplier=1.0):
     signal, portfolio, execution = policy["signal"], policy["portfolio"], policy["execution"]
     on = trend_on(closes, signal["momentum_lookback_sessions"], signal["momentum_skip_sessions"],
                   signal["sma_sessions"])
-    rebalance = week_ends(closes.index)
+    # v1 predates this key and is weekly; frozen policies are never edited to add it.
+    frequency = execution.get("rebalance_frequency", "weekly")
+    if frequency not in {"weekly", "monthly"}:
+        raise ValueError(f"Unknown rebalance_frequency: {frequency}")
+    rebalance = month_ends(closes.index) if frequency == "monthly" else week_ends(closes.index)
     window = portfolio["volatility_lookback_sessions"] + 1
     decisions = {}
 

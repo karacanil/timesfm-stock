@@ -42,7 +42,9 @@ def run_backtest(policy, output, cache, refresh=False, fetch=data.yahoo_adjusted
     gate = pass_bar(results["trend_strategy"], results["spy_buy_hold"], results["sixty_forty_monthly"],
                     results["trend_strategy_doubled_costs"], policy)
     exposure = decisions.sum(axis=1)
+    frequency = policy["execution"].get("rebalance_frequency", "weekly")
     summary = {
+        "policy_version": policy["version"], "rebalance_frequency": frequency,
         "policy_sha256": hashlib.sha256(json.dumps(policy, sort_keys=True).encode()).hexdigest(),
         "data_sha256": data.fingerprint(frames),
         "forward_filled_sessions": filled,
@@ -55,7 +57,7 @@ def run_backtest(policy, output, cache, refresh=False, fetch=data.yahoo_adjusted
     (out / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
     curves = equity.to_frame("trend_strategy").join(spy_equity.rename("spy_buy_hold")).join(mix_equity.rename("sixty_forty_monthly"))
     curves.round(6).to_csv(out / "equity.csv")
-    decisions.round(4).to_csv(out / "weekly_targets.csv")
+    decisions.round(4).to_csv(out / f"{frequency}_targets.csv")
     trades.to_csv(out / "trades.csv", index=False)
     (out / "report.md").write_text(markdown(summary))
     return summary
@@ -66,8 +68,9 @@ def markdown(summary):
              "spy_buy_hold": "SPY buy & hold", "sixty_forty_monthly": "60/40 SPY/IEF"}
     results = summary["results"]
     first = results["trend_strategy"]
-    lines = ["# Trend strategy backtest (policy v1)", "",
-             f"Period {first['start']} to {first['end']}. Decided at each week's last close, filled at the next open, "
+    period = {"weekly": "week", "monthly": "month"}[summary["rebalance_frequency"]]
+    lines = [f"# Trend strategy backtest (policy v{summary['policy_version']})", "",
+             f"Period {first['start']} to {first['end']}. Decided at each {period}'s last close, filled at the next open, "
              "10 bps per trade (20 bps in the stress row). Dividend-adjusted Yahoo prices; cash earns the 13-week T-bill rate.", "",
              f"## Verdict: **{summary['pass_bar']['verdict']}**", "",
              "| Check | Result |", "|---|---|"]
@@ -89,7 +92,7 @@ def markdown(summary):
     for key, label in names.items():
         lines.append(f"| {label} | " + " | ".join(f"{x:.2f}" for x in results[key]["cagr_by_third_pct"]) + " |")
     lines += ["", f"Average gross exposure: {summary['average_gross_exposure_pct']:.1f}%. "
-              f"Weeks fully in cash: {summary['time_fully_in_cash_pct']:.1f}%.", "",
+              f"Rebalances fully in cash: {summary['time_fully_in_cash_pct']:.1f}%.", "",
               "This is a sanity check of a published idea, not proof of future returns. The rules were fixed in "
               "the policy file before this backtest ran; a RETHINK verdict means changing the strategy in a new policy "
               "version, not tuning parameters until this period looks good. Yahoo adjusted prices can be revised; "
@@ -100,7 +103,7 @@ def markdown(summary):
 def main():
     parser = argparse.ArgumentParser(description="Rule-based trend strategy tools")
     parser.add_argument("command", choices=["backtest"])
-    parser.add_argument("--policy", type=Path, default=Path("trader_policy_v1.json"))
+    parser.add_argument("--policy", type=Path, default=Path("trader_policy_v2.json"))
     parser.add_argument("--output", type=Path, help="default: trader-results/v<policy version>")
     parser.add_argument("--cache", type=Path, default=Path(".cache/trader"))
     parser.add_argument("--refresh", action="store_true", help="re-download prices instead of using the cache")

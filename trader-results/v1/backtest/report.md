@@ -42,6 +42,6 @@ Sharpe floor (SPY Sharpe minus tolerance): 0.44
 | SPY buy & hold | 3.83 | 14.14 | 14.81 |
 | 60/40 SPY/IEF | 5.77 | 9.59 | 8.90 |
 
-Average gross exposure: 75.9%. Weeks fully in cash: 4.9%.
+Average gross exposure: 75.9%. Rebalances fully in cash: 4.9%.
 
 This is a sanity check of a published idea, not proof of future returns. The rules were fixed in the policy file before this backtest ran; a RETHINK verdict means changing the strategy in a new policy version, not tuning parameters until this period looks good. Yahoo adjusted prices can be revised; fractional shares are assumed; taxes are ignored.

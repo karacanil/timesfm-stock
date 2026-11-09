@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 
 from trader import data
-from trader.backtest import pass_bar, simulate, statistics, trend_strategy, week_ends
+from trader.backtest import month_ends, pass_bar, simulate, statistics, trend_strategy, week_ends
 from trader.cli import freeze_policy, run_backtest
 from trader.strategy import target_weights, trend_on
 
@@ -108,6 +108,28 @@ class SimulationTests(unittest.TestCase):
         pd.testing.assert_series_equal(equity[:day], shocked_equity[:day])
         pd.testing.assert_frame_equal(decisions[decisions.index <= day.date().isoformat()],
                                       shocked_decisions[shocked_decisions.index <= day.date().isoformat()])
+
+
+    def test_monthly_policy_decides_only_at_month_ends(self):
+        opens, closes = synthetic(['SPY', 'B', 'C'], sessions=700)
+        cash = pd.Series(0.0, index=closes.index)
+        policy = small_policy('2005-03-01')
+        policy['execution']['rebalance_frequency'] = 'monthly'
+        _, trades, decisions = trend_strategy(opens, closes, cash, policy)
+        days = pd.DatetimeIndex(pd.to_datetime(decisions.index))
+        self.assertTrue(set(days) <= month_ends(closes.index))
+        self.assertGreater(len(days), 10)
+        # Fills happen on the first session after a month end.
+        fill_days = pd.to_datetime(trades['date']).unique()
+        previous = {closes.index[closes.index.get_loc(d) - 1] for d in fill_days}
+        self.assertTrue(previous <= month_ends(closes.index))
+
+    def test_unknown_rebalance_frequency_rejected(self):
+        opens, closes = synthetic(['SPY'], sessions=300)
+        policy = small_policy('2005-01-01')
+        policy['execution']['rebalance_frequency'] = 'daily'
+        with self.assertRaises(ValueError):
+            trend_strategy(opens, closes, pd.Series(0.0, index=closes.index), policy)
 
 
 class StatisticsTests(unittest.TestCase):
