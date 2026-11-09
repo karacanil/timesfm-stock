@@ -1,0 +1,13 @@
+{
+  "policy": "trader_policy_v2.json",
+  "broker": "simulated",
+  "starting_cash": 100000,
+  "calendar": "XNYS",
+  "close_delay_minutes": 60,
+  "cash_buffer": 0.02,
+  "max_order_fraction": 0.30,
+  "max_orders": 20,
+  "max_daily_move": 0.25,
+  "max_fill_lag_sessions": 5,
+  "halt_file": "HALT"
+}

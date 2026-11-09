@@ -27,6 +27,26 @@ def yahoo_adjusted(symbol, start):
     return frame[["Open", "Close"]].sort_index()
 
 
+def yahoo_full(symbol, start):
+    """Raw Open/Close for trading, Adj Close for signals, plus dividends and splits."""
+    import yfinance as yf
+    for attempt in range(3):
+        try:
+            frame = yf.Ticker(symbol).history(start=start, interval="1d", auto_adjust=False,
+                                              actions=True, raise_errors=True, timeout=30)
+            break
+        except Exception:
+            if attempt == 2:
+                raise
+            time.sleep(5 * (attempt + 1))
+    if frame.empty:
+        raise ValueError(f"Yahoo returned no data for {symbol}")
+    frame.index = pd.DatetimeIndex([pd.Timestamp(x).date() for x in frame.index])
+    if frame.index.has_duplicates:
+        raise ValueError(f"Duplicate daily bars for {symbol}")
+    return frame[["Open", "Close", "Adj Close", "Dividends", "Stock Splits"]].sort_index()
+
+
 def load(symbols, start, cache_dir, refresh=False, fetch=yahoo_adjusted):
     """Return {symbol: DataFrame[Open, Close]}; cached as CSV under cache_dir."""
     cache_dir = Path(cache_dir)

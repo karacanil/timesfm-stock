@@ -8,6 +8,7 @@ from pathlib import Path
 
 from . import data
 from .backtest import fixed_mix, pass_bar, statistics, trend_strategy
+from . import paper
 
 
 def freeze_policy(policy_path, output):
@@ -102,12 +103,25 @@ def markdown(summary):
 
 def main():
     parser = argparse.ArgumentParser(description="Rule-based trend strategy tools")
-    parser.add_argument("command", choices=["backtest"])
+    parser.add_argument("command", choices=["backtest", "paper"])
     parser.add_argument("--policy", type=Path, default=Path("trader_policy_v2.json"))
     parser.add_argument("--output", type=Path, help="default: trader-results/v<policy version>")
     parser.add_argument("--cache", type=Path, default=Path(".cache/trader"))
+    parser.add_argument("--config", type=Path, default=Path("paper_config.json"), help="paper command only")
     parser.add_argument("--refresh", action="store_true", help="re-download prices instead of using the cache")
     args = parser.parse_args()
+    if args.command == "paper":
+        config = json.loads(args.config.read_text())
+        policy_path = Path(config["policy"])
+        policy = json.loads(policy_path.read_text())
+        frozen = Path("trader-results") / f"v{policy['version']}" / "policy.json"
+        if frozen.exists() and json.loads(frozen.read_text()) != policy:
+            raise ValueError(f"{policy_path} differs from its frozen backtest copy {frozen}")
+        output = args.output or Path("paper") / f"v{policy['version']}"
+        for line in paper.run(config, policy, output):
+            print(line)
+        print(f"Report: {output / 'report.md'}")
+        return
     output = args.output or Path("trader-results") / f"v{json.loads(args.policy.read_text())['version']}"
     policy = freeze_policy(args.policy, output)
     summary = run_backtest(policy, output, args.cache, args.refresh)

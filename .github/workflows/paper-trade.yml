@@ -1,0 +1,49 @@
+name: Paper trading
+on:
+  workflow_dispatch:
+  schedule:
+    # After each US session (Tue-Sat UTC). Month-end decisions are submitted for the next open,
+    # so several hours of GitHub scheduling delay are harmless; backups cover dropped runs.
+    - cron: '7 2 * * 2-6'
+    - cron: '37 4 * * 2-6'
+    - cron: '7 7 * * 2-6'
+permissions:
+  contents: write
+concurrency:
+  group: paper-trading
+  cancel-in-progress: false
+jobs:
+  paper:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      # Set the repository variable TRADER_HALT to 1 to stop new orders without a commit.
+      TRADER_HALT: ${{ vars.TRADER_HALT }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: pip install -e .
+      - name: Settle, reconcile, rebalance at month end, report
+        run: python -m trader.cli paper
+      - name: Show report
+        if: always()
+        run: |
+          if [ -f paper/v2/report.md ]; then cat paper/v2/report.md >> "$GITHUB_STEP_SUMMARY"; fi
+      - name: Persist ledger
+        if: always()
+        run: |
+          [ -d paper ] || exit 0
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add paper
+          git diff --cached --quiet && exit 0
+          git commit -m 'Record paper-trading ledger [skip ci]'
+          # The forward-test workflow also pushes to main; rebase onto it if needed.
+          for attempt in 1 2 3; do
+            git pull --rebase --quiet && git push && exit 0
+            sleep 10
+          done
+          exit 1
