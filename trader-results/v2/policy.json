@@ -1,0 +1,54 @@
+{
+  "version": 2,
+  "declared_date": "2026-11-09",
+  "note": "Designed after seeing the v1 backtest on the same period, so this backtest is weaker evidence than v1's. Single change from v1: rebalance monthly instead of weekly, to cut signal whipsaw. Signal, sizing, costs, benchmarks and pass bar are unchanged. Written before the v2 backtest ran.",
+  "universe": [
+    "SPY",
+    "QQQ",
+    "IWM",
+    "EFA",
+    "EEM",
+    "TLT",
+    "IEF",
+    "GLD",
+    "VNQ"
+  ],
+  "cash_rate_symbol": "^IRX",
+  "data_start": "2003-01-01",
+  "backtest_start": "2006-01-01",
+  "signal": {
+    "momentum_lookback_sessions": 252,
+    "momentum_skip_sessions": 21,
+    "sma_sessions": 200
+  },
+  "portfolio": {
+    "volatility_lookback_sessions": 60,
+    "target_volatility": 0.1,
+    "max_gross_exposure": 1.0,
+    "max_weight": 0.25
+  },
+  "execution": {
+    "rebalance": "last session of each month, filled at next session open",
+    "rebalance_frequency": "monthly",
+    "min_trade_weight": 0.02,
+    "commission_bps": 5,
+    "slippage_bps": 5
+  },
+  "benchmarks": {
+    "spy_buy_hold": {
+      "SPY": 1.0
+    },
+    "sixty_forty_monthly": {
+      "SPY": 0.6,
+      "IEF": 0.4
+    }
+  },
+  "pass_bar": {
+    "max_drawdown_better_than_spy_and_60_40": true,
+    "max_drawdown_floor_pct": -25.0,
+    "sharpe_vs_spy_tolerance": 0.1,
+    "positive_cagr_each_third": true,
+    "max_annual_cost_drag_pct": 0.5,
+    "doubled_costs_still_meets_sharpe_bar": true
+  }
+}
