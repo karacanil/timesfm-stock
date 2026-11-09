@@ -72,6 +72,8 @@ v2 candidates (only after v1 has run in paper): momentum ranking across individu
 
 **Status (Nov 9, 2026): built; policy v1 verdict RETHINK.** See [trader-results/v1/backtest/report.md](trader-results/v1/backtest/report.md). Drawdowns were far smaller than SPY's and 60/40's (−15% vs −55% and −33%), but the Sharpe ratio was 0.48 against 0.61 for 60/40, and costs failed the bar: turnover was 636%/yr, about 70% of it from weekly signal flips (whipsaw), so cost drag was 0.64%/yr against the 0.5% limit. Any v2 is designed after seeing this period, so its backtest is weaker evidence; paper trading becomes the real test.
 
+**Policy v2 (monthly rebalance, the only change; rules committed before it ran): PROCEED.** See [trader-results/v2/backtest/report.md](trader-results/v2/backtest/report.md). 6.45% CAGR, Sharpe 0.58, max drawdown −12%, turnover 301%/yr, cost drag 0.30%/yr; still passes with doubled costs. It still trails 60/40 on return (8.06%) and Sharpe (0.61); its value over these years was drawdown protection (2008: +5.8% vs −17.9%; 2022: −8.9% vs −16.6%), not extra return. v2 is the candidate for Phase 2 paper trading.
+
 - New package `src/trader/` in this repo, with modules `data`, `signal`, `portfolio`, `risk`, `broker`, `ledger`, `backtest`, `cli`. Separate from `timesfm_stock`, and none of its files are touched.
 - Daily, dividend-adjusted bars. Use adjusted closes for signals, which differs from the TimesFM study's raw closes on purpose.
 - Backtest decision on day t's close, fill at day t+1's open, with 5 bps commission plus 5 bps slippage per trade. Tests that look for look-ahead bias (using data that wasn't available yet).
