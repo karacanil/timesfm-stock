@@ -3,180 +3,212 @@
   "policy_sha256": "c880cd165dd88d82caef93686f1ec93b315864efab1e1015edb54a7c382bc83a",
   "primary_horizon": 5,
   "collection_finished": true,
-  "pending_primary_outcomes": 8,
+  "pending_primary_outcomes": 0,
   "interval_confidence_pct": 98.75,
-  "verdict": "INCONCLUSIVE",
+  "verdict": "NO_GO",
   "modes": {
     "univariate": {
-      "verdict": "INCONCLUSIVE",
-      "complete_origins": 21,
-      "complete_fraction": 0.9545454545454546,
+      "verdict": "NO_GO",
+      "complete_origins": 22,
+      "complete_fraction": 1.0,
       "comparisons": {
         "last_price": {
-          "skill_pct": -13.97132157926022,
+          "skill_pct": -14.295790114839901,
           "intervals_pct": {
             "5": [
-              -23.85899351176714,
-              -7.292909859150969
+              -23.396814757528695,
+              -7.839083804887054
             ],
             "10": [
-              -21.833703897514056,
-              -9.943441333664916
+              -22.863193332752996,
+              -9.793650369750225
             ]
           },
           "symbol_skill_pct": {
-            "AAPL": 2.909473148558539,
-            "MSFT": 8.680301496943665,
-            "GOOGL": -20.78337556652081,
-            "AMZN": 4.689197125360267,
-            "NVDA": -39.951792379153275,
-            "JPM": 6.243411914860175,
-            "XOM": -2.7307257659866746,
-            "SPY": -17.10268034244111
+            "AAPL": 2.49415436274002,
+            "MSFT": 8.31172552006112,
+            "GOOGL": -20.77411966785554,
+            "AMZN": 6.157350509640214,
+            "NVDA": -41.06639793056348,
+            "JPM": 3.1514160810940717,
+            "XOM": -2.631379531674294,
+            "SPY": -20.218796322158727
           },
           "winning_symbols": 4,
           "leave_one_symbol_out_skill_pct": {
-            "AAPL": -15.139826036951408,
-            "MSFT": -16.197718922498304,
-            "GOOGL": -12.068923994531033,
-            "AMZN": -16.800946574217377,
-            "NVDA": -5.162598009452779,
-            "JPM": -15.073484699010686,
-            "XOM": -15.831773602564336,
-            "SPY": -13.810398851288408
+            "AAPL": -15.428845803509471,
+            "MSFT": -16.633720535554563,
+            "GOOGL": -12.554779956177242,
+            "AMZN": -17.443722149727115,
+            "NVDA": -5.164985497203767,
+            "JPM": -15.315406583427361,
+            "XOM": -16.16096539284877,
+            "SPY": -13.981043804956794
           },
           "half_period_skill_pct": [
-            -20.52912113368801,
-            -11.102049126738622
-          ]
+            -19.056944149617273,
+            -11.787904491974555
+          ],
+          "checks": {
+            "at_least_5pct_improvement": false,
+            "positive_lower_interval_both_blocks": false,
+            "wins_on_most_symbols": false,
+            "positive_skill_both_halves": false,
+            "positive_skill_after_removing_any_symbol": false
+          }
         },
         "drift": {
-          "skill_pct": -11.763571038093934,
+          "skill_pct": -11.993973421739824,
           "intervals_pct": {
             "5": [
-              -18.955094723068942,
-              -7.250961342819336
+              -18.36330873224187,
+              -7.5058719242492264
             ],
             "10": [
-              -17.62316753596609,
-              -8.754712291568403
+              -18.04795292874261,
+              -8.74127717560289
             ]
           },
           "symbol_skill_pct": {
-            "AAPL": -2.0951378561223866,
-            "MSFT": 12.164207957628514,
-            "GOOGL": -16.130428063315307,
-            "AMZN": 5.187627268942974,
-            "NVDA": -34.75690707137711,
-            "JPM": 1.4158416621062986,
-            "XOM": -4.570337140354441,
-            "SPY": -5.827188944584161
+            "AAPL": -3.3584247171404735,
+            "MSFT": 11.797997606303046,
+            "GOOGL": -15.83750381239879,
+            "AMZN": 6.974336836257167,
+            "NVDA": -35.96058803988274,
+            "JPM": -0.15143324408040115,
+            "XOM": -4.784707138381483,
+            "SPY": -8.727874856541229
           },
-          "winning_symbols": 3,
+          "winning_symbols": 2,
           "leave_one_symbol_out_skill_pct": {
-            "AAPL": -12.384793809697658,
-            "MSFT": -14.165928307648468,
-            "GOOGL": -10.512791805666488,
-            "AMZN": -14.29200835090121,
-            "NVDA": -3.7740141925523885,
-            "JPM": -12.431269573731063,
-            "XOM": -12.903624854519368,
-            "SPY": -12.09606549077471
+            "AAPL": -12.52993098570585,
+            "MSFT": -14.504961760471847,
+            "GOOGL": -10.932550812843678,
+            "AMZN": -14.874591260783475,
+            "NVDA": -3.6358834679572016,
+            "JPM": -12.64774659328407,
+            "XOM": -13.093249179797372,
+            "SPY": -12.182847802132146
           },
           "half_period_skill_pct": [
-            -15.852446963377886,
-            -9.922089921284382
-          ]
+            -14.14783624773628,
+            -10.820894000761005
+          ],
+          "checks": {
+            "at_least_5pct_improvement": false,
+            "positive_lower_interval_both_blocks": false,
+            "wins_on_most_symbols": false,
+            "positive_skill_both_halves": false,
+            "positive_skill_after_removing_any_symbol": false
+          }
         }
       },
       "reasons": [
-        "Primary-horizon outcomes remain pending."
+        "last_price: failed checks: at_least_5pct_improvement, positive_lower_interval_both_blocks, wins_on_most_symbols, positive_skill_both_halves, positive_skill_after_removing_any_symbol.",
+        "drift: failed checks: at_least_5pct_improvement, positive_lower_interval_both_blocks, wins_on_most_symbols, positive_skill_both_halves, positive_skill_after_removing_any_symbol.",
+        "At least one baseline comparison excludes the required 5.0% gain in both block checks."
       ]
     },
     "multivariate": {
-      "verdict": "INCONCLUSIVE",
-      "complete_origins": 21,
-      "complete_fraction": 0.9545454545454546,
+      "verdict": "NO_GO",
+      "complete_origins": 22,
+      "complete_fraction": 1.0,
       "comparisons": {
         "last_price": {
-          "skill_pct": -13.009714506901403,
+          "skill_pct": -13.591759322565512,
           "intervals_pct": {
             "5": [
-              -25.016386624506204,
-              -6.718228745860373
+              -24.97161765075579,
+              -7.20927627407583
             ],
             "10": [
-              -23.026675302988696,
-              -7.724300706010023
+              -23.896040666932382,
+              -7.761987847634821
             ]
           },
           "symbol_skill_pct": {
-            "AAPL": -10.822162753552899,
-            "MSFT": 6.674753085581808,
-            "GOOGL": -11.445714147623054,
-            "AMZN": 2.6003514741962497,
-            "NVDA": -40.21718435555086,
-            "JPM": 7.831131861549712,
-            "XOM": -3.427385116051185,
-            "SPY": -9.927771901887272
+            "AAPL": -11.624829676616312,
+            "MSFT": 6.284095916780541,
+            "GOOGL": -12.000488704058142,
+            "AMZN": 3.453401497838482,
+            "NVDA": -41.438830680613734,
+            "JPM": 4.899278009621599,
+            "XOM": -3.7074567896674626,
+            "SPY": -11.589187934547528
           },
           "winning_symbols": 3,
           "leave_one_symbol_out_skill_pct": {
-            "AAPL": -13.16113889280459,
-            "MSFT": -14.944474157612731,
-            "GOOGL": -13.446491800735405,
-            "AMZN": -15.376778015275772,
-            "NVDA": -3.784974786957207,
-            "JPM": -14.146015030396963,
-            "XOM": -14.595703755097823,
-            "SPY": -13.168097703768789
+            "AAPL": -13.724495963090554,
+            "MSFT": -15.647198201928791,
+            "GOOGL": -14.019403252892172,
+            "AMZN": -16.215170991780447,
+            "NVDA": -4.093799115835894,
+            "JPM": -14.672377386766433,
+            "XOM": -15.172289825438035,
+            "SPY": -13.698175208788532
           },
           "half_period_skill_pct": [
-            -21.515093639050885,
-            -9.288306153446758
-          ]
+            -19.44950980618241,
+            -10.506253558019907
+          ],
+          "checks": {
+            "at_least_5pct_improvement": false,
+            "positive_lower_interval_both_blocks": false,
+            "wins_on_most_symbols": false,
+            "positive_skill_both_halves": false,
+            "positive_skill_after_removing_any_symbol": false
+          }
         },
         "drift": {
-          "skill_pct": -10.820591358178856,
+          "skill_pct": -11.304121190447303,
           "intervals_pct": {
             "5": [
-              -20.18321413562653,
-              -6.010563331339302
+              -20.092137946578767,
+              -6.207469855573164
             ],
             "10": [
-              -18.968671800304012,
-              -6.097031505554695
+              -19.573393556600017,
+              -6.213236716193182
             ]
           },
           "symbol_skill_pct": {
-            "AAPL": -16.534582216757588,
-            "MSFT": 10.23517253505326,
-            "GOOGL": -7.152482111724634,
-            "AMZN": 3.10970528651775,
-            "NVDA": -35.01244793507687,
-            "JPM": 3.085314046047305,
-            "XOM": -5.279471652595413,
-            "SPY": 0.6568675174726812
+            "AAPL": -18.324870465872788,
+            "MSFT": 9.847464758602708,
+            "GOOGL": -7.422493104703642,
+            "AMZN": 4.293928180386441,
+            "NVDA": -36.31954081988545,
+            "JPM": 1.6560364180611575,
+            "XOM": -5.883361768686712,
+            "SPY": -0.9231137914347709
           },
-          "winning_symbols": 4,
+          "winning_symbols": 3,
           "leave_one_symbol_out_skill_pct": {
-            "AAPL": -10.453452115317518,
-            "MSFT": -12.934597320202057,
-            "GOOGL": -11.871231404610793,
-            "AMZN": -12.898431589704163,
-            "NVDA": -2.414581328119003,
-            "JPM": -11.525095639691285,
-            "XOM": -11.698802015225018,
-            "SPY": -11.46343936676615
+            "AAPL": -10.86838470078224,
+            "MSFT": -13.536445095060001,
+            "GOOGL": -12.376064791972441,
+            "AMZN": -13.672915176878696,
+            "NVDA": -2.580272168558939,
+            "JPM": -12.019592974061123,
+            "XOM": -12.130683726548796,
+            "SPY": -11.904441818008603
           },
           "half_period_skill_pct": [
-            -16.800162555348418,
-            -8.127609803488745
-          ]
+            -14.524215136024953,
+            -9.550329864656625
+          ],
+          "checks": {
+            "at_least_5pct_improvement": false,
+            "positive_lower_interval_both_blocks": false,
+            "wins_on_most_symbols": false,
+            "positive_skill_both_halves": false,
+            "positive_skill_after_removing_any_symbol": false
+          }
         }
       },
       "reasons": [
-        "Primary-horizon outcomes remain pending."
+        "last_price: failed checks: at_least_5pct_improvement, positive_lower_interval_both_blocks, wins_on_most_symbols, positive_skill_both_halves, positive_skill_after_removing_any_symbol.",
+        "drift: failed checks: at_least_5pct_improvement, positive_lower_interval_both_blocks, wins_on_most_symbols, positive_skill_both_halves, positive_skill_after_removing_any_symbol.",
+        "At least one baseline comparison excludes the required 5.0% gain in both block checks."
       ]
     }
   },
