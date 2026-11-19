@@ -1,46 +1,46 @@
 # TimesFM 3.0 forward test
 
-Frozen forecast origins: **22**. Pending ticker/date outcomes: **2992**. Split exclusions: **0**.
+Frozen forecast origins: **22**. Pending ticker/date outcomes: **2640**. Split exclusions: **0**.
 
 Errors are normalized by the price at the forecast origin. Baseline predicts that price at every horizon. Positive skill means lower MAE than the baseline. Coverage measures the q10–q90 interval (nominal 80%).
 
 | Mode | Horizon (sessions) | N | MAE % | Baseline MAE % | Skill % | Direction % | Coverage % |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| multivariate | all | 6688 | 4.981 | 4.806 | -3.65 | 45.9 | 71.0 |
+| multivariate | all | 7040 | 5.000 | 4.804 | -4.07 | 45.6 | 71.5 |
 | multivariate | 1 | 484 | 1.712 | 1.660 | -3.13 | 47.9 | 73.8 |
-| multivariate | 5 | 462 | 3.642 | 3.504 | -3.95 | 44.2 | 76.6 |
-| multivariate | 20 | 132 | 8.680 | 8.369 | -3.71 | 42.4 | 57.6 |
-| univariate | all | 6688 | 5.001 | 4.806 | -4.05 | 50.7 | 66.9 |
+| multivariate | 5 | 484 | 3.600 | 3.463 | -3.96 | 43.6 | 77.5 |
+| multivariate | 20 | 154 | 8.687 | 8.344 | -4.11 | 40.9 | 58.4 |
+| univariate | all | 7040 | 5.025 | 4.804 | -4.59 | 50.4 | 67.1 |
 | univariate | 1 | 484 | 1.701 | 1.660 | -2.43 | 47.3 | 73.3 |
-| univariate | 5 | 462 | 3.685 | 3.504 | -5.17 | 50.6 | 71.9 |
-| univariate | 20 | 132 | 8.571 | 8.369 | -2.41 | 51.5 | 57.6 |
+| univariate | 5 | 484 | 3.664 | 3.463 | -5.82 | 49.6 | 72.7 |
+| univariate | 20 | 154 | 8.624 | 8.344 | -3.36 | 49.4 | 57.8 |
 
 ## Sector diagnostics (5-session horizon)
 
 | Mode | Sector | N | Skill vs last price % |
 |---|---|---:|---:|
-| multivariate | Communication Services | 42 | -8.41 |
-| multivariate | Consumer Discretionary | 42 | -1.04 |
-| multivariate | Consumer Staples | 42 | -11.76 |
-| multivariate | Energy | 42 | -3.91 |
-| multivariate | Financials | 42 | -5.32 |
-| multivariate | Health Care | 42 | 5.68 |
-| multivariate | Industrials | 42 | -11.10 |
-| multivariate | Information Technology | 42 | -6.23 |
-| multivariate | Materials | 42 | 1.85 |
-| multivariate | Real Estate | 42 | 2.01 |
-| multivariate | Utilities | 42 | 4.38 |
-| univariate | Communication Services | 42 | -10.71 |
-| univariate | Consumer Discretionary | 42 | 2.44 |
-| univariate | Consumer Staples | 42 | -30.40 |
-| univariate | Energy | 42 | -3.15 |
-| univariate | Financials | 42 | 1.32 |
-| univariate | Health Care | 42 | 6.06 |
-| univariate | Industrials | 42 | -9.33 |
-| univariate | Information Technology | 42 | -1.43 |
-| univariate | Materials | 42 | 0.61 |
-| univariate | Real Estate | 42 | 0.43 |
-| univariate | Utilities | 42 | -14.55 |
+| multivariate | Communication Services | 44 | -8.71 |
+| multivariate | Consumer Discretionary | 44 | -0.78 |
+| multivariate | Consumer Staples | 44 | -11.89 |
+| multivariate | Energy | 44 | -4.14 |
+| multivariate | Financials | 44 | -5.33 |
+| multivariate | Health Care | 44 | 5.72 |
+| multivariate | Industrials | 44 | -11.32 |
+| multivariate | Information Technology | 44 | -6.09 |
+| multivariate | Materials | 44 | 2.33 |
+| multivariate | Real Estate | 44 | 1.86 |
+| multivariate | Utilities | 44 | 4.85 |
+| univariate | Communication Services | 44 | -11.58 |
+| univariate | Consumer Discretionary | 44 | 1.60 |
+| univariate | Consumer Staples | 44 | -31.85 |
+| univariate | Energy | 44 | -4.41 |
+| univariate | Financials | 44 | 0.31 |
+| univariate | Health Care | 44 | 5.55 |
+| univariate | Industrials | 44 | -10.09 |
+| univariate | Information Technology | 44 | -1.36 |
+| univariate | Materials | 44 | 1.44 |
+| univariate | Real Estate | 44 | 0.80 |
+| univariate | Utilities | 44 | -15.71 |
 
 Sector results are exploratory diagnostics; they do not replace the fixed pooled primary endpoint.
 
@@ -50,18 +50,18 @@ See summary.csv for per-symbol scores and predictions.csv for individual outcome
 
 ## Pilot decision
 
-**INCONCLUSIVE** — primary horizon: 5 trading sessions.
+**NO_GO** — primary horizon: 5 trading sessions.
 
 PROMISING supports a new untouched confirmation experiment before strategy research. NO_GO supports deprioritizing this setup. INCONCLUSIVE requires more evidence; it is not a pass.
 
 | Mode | Verdict | Complete origins | Last-price skill % | Drift skill % |
 |---|---|---:|---:|---:|
-| univariate | INCONCLUSIVE | 21 | -5.17 | -5.62 |
-| multivariate | INCONCLUSIVE | 21 | -3.95 | -4.39 |
+| univariate | NO_GO | 22 | -5.82 | -6.08 |
+| multivariate | NO_GO | 22 | -3.96 | -4.22 |
 
 Approximate paired block intervals use 98.75% confidence per comparison (adjusted for the tested modes/baselines). Stocks are resampled together; block sizes 5 and 10 check sensitivity. With a short pilot these intervals remain fragile, and cross-regime reliability is untested.
 
-**univariate:** Primary-horizon outcomes remain pending.
-**multivariate:** Primary-horizon outcomes remain pending.
+**univariate:** last_price: failed checks: at_least_5pct_improvement, positive_lower_interval_both_blocks, wins_on_most_symbols, positive_skill_both_halves, positive_skill_after_removing_any_symbol. drift: failed checks: at_least_5pct_improvement, positive_lower_interval_both_blocks, wins_on_most_symbols, positive_skill_both_halves, positive_skill_after_removing_any_symbol. At least one baseline comparison excludes the required 5.0% gain in both block checks.
+**multivariate:** last_price: failed checks: at_least_5pct_improvement, positive_lower_interval_both_blocks, wins_on_most_symbols, positive_skill_both_halves, positive_skill_after_removing_any_symbol. drift: failed checks: at_least_5pct_improvement, positive_lower_interval_both_blocks, wins_on_most_symbols, positive_skill_both_halves, positive_skill_after_removing_any_symbol. At least one baseline comparison excludes the required 5.0% gain in both block checks.
 
 See decision.json for uncertainty intervals, individual-stock results, half-period checks, and leave-one-stock-out checks.
