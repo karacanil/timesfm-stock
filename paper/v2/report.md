@@ -4,7 +4,7 @@ Started 2026-11-06 with $100,000. Rebalances at month ends, filled at the next o
 
 | As of | Equity | Return | SPY return | Max drawdown | Cash |
 |---|---:|---:|---:|---:|---:|
-| 2026-11-19 | $100,000.00 | +0.00% | -2.64% | 0.00% | $100,000.00 |
+| 2026-11-20 | $100,000.00 | +0.00% | -6.19% | 0.00% | $100,000.00 |
 
 ## Positions
 
