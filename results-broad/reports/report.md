@@ -1,19 +1,19 @@
 # TimesFM 3.0 forward test
 
-Frozen forecast origins: **22**. Pending ticker/date outcomes: **1210**. Split exclusions: **0**.
+Frozen forecast origins: **22**. Pending ticker/date outcomes: **990**. Split exclusions: **0**.
 
 Errors are normalized by the price at the forecast origin. Baseline predicts that price at every horizon. Positive skill means lower MAE than the baseline. Coverage measures the q10–q90 interval (nominal 80%).
 
 | Mode | Horizon (sessions) | N | MAE % | Baseline MAE % | Skill % | Direction % | Coverage % |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| multivariate | all | 8470 | 5.106 | 4.841 | -5.45 | 46.0 | 72.9 |
+| multivariate | all | 8690 | 5.097 | 4.820 | -5.75 | 46.1 | 73.3 |
 | multivariate | 1 | 484 | 1.712 | 1.660 | -3.13 | 47.9 | 73.8 |
 | multivariate | 5 | 484 | 3.600 | 3.463 | -3.96 | 43.6 | 77.5 |
-| multivariate | 20 | 264 | 8.297 | 7.849 | -5.70 | 42.4 | 62.1 |
-| univariate | all | 8470 | 5.149 | 4.841 | -6.35 | 50.0 | 68.1 |
+| multivariate | 20 | 286 | 8.232 | 7.726 | -6.54 | 43.0 | 62.9 |
+| univariate | all | 8690 | 5.135 | 4.820 | -6.54 | 50.1 | 68.4 |
 | univariate | 1 | 484 | 1.701 | 1.660 | -2.43 | 47.3 | 73.3 |
 | univariate | 5 | 484 | 3.664 | 3.463 | -5.82 | 49.6 | 72.7 |
-| univariate | 20 | 264 | 8.353 | 7.849 | -6.41 | 48.9 | 58.0 |
+| univariate | 20 | 286 | 8.287 | 7.726 | -7.25 | 49.3 | 58.4 |
 
 ## Sector diagnostics (5-session horizon)
 
